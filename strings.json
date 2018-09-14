@@ -1,0 +1,21 @@
+{
+  "help": [
+    "To run commands you must use '/' or '!'.",
+    "For help with any command, run [!help <command>] replacing <command> with the command you need help with.",
+    "To be able to queue music you must first register on the website, then use the [!play] command."
+  ],
+  "commandhelp": {
+    "play": [
+      "You must first register with [!register].",
+      "Then use [!play <videoid>], where <videoid> is the ID of the video you want music from.",
+      "For information on how to find a video's ID, see https://docs.joeworkman.net/rapidweaver/stacks/youtube/video-id.",
+      "You can also search for a song as long as it meets the proper criteria"
+    ],
+    "q": [
+      "You must first register with [!register].",
+      "Then use [!q <videoid>], where <videoid> is the ID of the video you want music from.",
+      "For information on how to find a video's ID, see https://docs.joeworkman.net/rapidweaver/stacks/youtube/video-id.",
+      "You can also search for a song as long as it meets the proper criteria"
+    ]
+  }
+}

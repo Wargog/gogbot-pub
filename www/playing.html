@@ -1,0 +1,78 @@
+<html>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link href="/css/app.css" rel="stylesheet">
+<div style="color: white; font-family: 'Roboto', sans-serif;">
+    <marquee style="font-size: 36px; width: 65vw; float: left;" id="scroll"></marquee>
+    <div style="font-size: 36px; float: right; padding-right: 15px;"><span id="minutecount">0</span>:<span id="secondcount">00</span>&nbsp;/&nbsp;<span id="minutes">0</span>:<span id="seconds">00</span></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    let current = {}
+    let minutes = 0
+    let seconds = 0
+    let minutecount = 0
+    let secondcount = 0
+
+    function timerLoop() {
+        console.log(minutecount)
+        secondcount++
+        if (secondcount < 10)
+            $('#secondcount').text('0' + secondcount)
+        else
+            $('#secondcount').text(secondcount)
+
+        if (secondcount > 59) {
+            minutecount++
+
+            secondcount = 0
+            $('#secondcount').text('00')
+        }
+
+        $('#minutecount').text(minutecount)
+    }
+
+    timerLoop()
+
+    $.get('/playing/txt', (data) => {
+        if (current !== data) {
+            current = data
+
+            minutes = Math.floor(parseInt(current.split(',')[2]) / 60)
+            seconds = parseInt(current.split(',')[2]) % 60
+
+            $('#minutes').text(minutes)
+            $('#seconds').text(seconds)
+
+            $('#scroll').text(current.split(',')[3] + ' [' + current.split(',')[1] + ']')
+        }
+    })
+
+    setInterval(() => {
+        $.get('/playing/txt', (data) => {
+            if (current !== data) {
+                current = data
+
+                // Reset elapsed counters
+                minutecount = 0
+                secondcount = 0
+
+                minutes = Math.floor(parseInt(current.split(',')[2]) / 60)
+                seconds = parseInt(current.split(',')[2]) % 60
+
+                $('#minutes').text(minutes)
+
+                if (seconds < 10)
+                    $('#seconds').text('0' + seconds)
+                else
+                    $('#seconds').text(seconds)
+
+                $('#scroll').text(current.split(',')[3] + ' [' + current.split(',')[1] + ']')
+            }
+        })
+    }, 500)
+
+    setInterval(() => {
+        timerLoop()
+    }, 1000)
+</script>
+</html>
